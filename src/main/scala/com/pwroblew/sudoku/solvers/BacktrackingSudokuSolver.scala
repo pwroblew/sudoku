@@ -8,7 +8,7 @@ class BacktrackingSudokuSolver extends SudokuSolver {
     def loop(pending: List[Sudoku], solutions: List[Sudoku]): List[Sudoku] = {
 
       pending match {
-        case Nil         => solutions
+        case Nil            => solutions
         case sudoku :: rest =>
 
           sudoku.firstEmptyCellIndex match {
@@ -38,7 +38,7 @@ class BacktrackingSudokuSolver extends SudokuSolver {
     def loop(pending: List[Sudoku]): Option[Sudoku] = {
 
       pending match {
-        case Nil         => None
+        case Nil            => None
         case sudoku :: rest =>
 
           sudoku.firstEmptyCellIndex match {
