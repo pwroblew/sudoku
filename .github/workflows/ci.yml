@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Scala CLI
+        uses: VirtusLab/scala-cli-setup@v1
+        with:
+          jvm: temurin:21
+
+      - name: Check formatting
+        run: scala-cli fmt --check .
+
+      - name: Compile
+        run: scala-cli compile .
+
+      - name: Run tests
+        run: scala-cli test .
