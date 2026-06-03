@@ -95,15 +95,12 @@ object Sudoku {
   def fromString(s: String): Either[Throwable, Sudoku] = {
     val cleaned = s.replaceAll("\\s", "")
     if (cleaned.length != 81) then
-      return SudokuParserError("Input string must have exactly 81 characters").asLeft
+      SudokuParserError("Input string must have exactly 81 characters").asLeft
     else
       cleaned
         .map {
-          case '.' => 0.asRight
-          case '0' =>
-            SudokuParserError(
-              "Invalid character in input string, '0' can't be accepted."
-            ).asLeft
+          case '.'            => 0.asRight
+          case '0'            => 0.asRight
           case c if c.isDigit => c.asDigit.asRight
           case _              =>
             SudokuParserError(
