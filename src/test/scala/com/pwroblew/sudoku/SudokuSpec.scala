@@ -1,3 +1,5 @@
+package com.pwroblew.sudoku
+
 import munit.*
 
 class SudokuSpec extends FunSuite {
@@ -29,12 +31,14 @@ class SudokuSpec extends FunSuite {
     )
   }
 
-
   val sudokuF: FunFixture[Sudoku] = FunFixture(
-    _ => Sudoku.fromString(validSudokuString).fold(
-      error => fail(s"Failed to parse Sudoku: ${error.getMessage}"),
-      sudoku => sudoku
-    ),
+    _ =>
+      Sudoku
+        .fromString(validSudokuString)
+        .fold(
+          error => fail(s"Failed to parse Sudoku: ${error.getMessage}"),
+          sudoku => sudoku
+        ),
     _ => ()
   )
 

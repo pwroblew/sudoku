@@ -1,8 +1,12 @@
+package com.pwroblew.sudoku
+
 import cats.implicits._
 
 enum SudokuStatus {
   case Incomplete, Solved, Invalid
 }
+
+case class SudokuParserError(message: String) extends Throwable(message)
 
 case class Sudoku private (data: Vector[Int]) {
 
@@ -91,20 +95,18 @@ object Sudoku {
   def fromString(s: String): Either[Throwable, Sudoku] = {
     val cleaned = s.replaceAll("\\s", "")
     if (cleaned.length != 81) then
-      return new IllegalArgumentException(
-        "Input string must have exactly 81 characters"
-      ).asLeft
+      return SudokuParserError("Input string must have exactly 81 characters").asLeft
     else
       cleaned
         .map {
           case '.' => 0.asRight
           case '0' =>
-            new IllegalArgumentException(
+            SudokuParserError(
               "Invalid character in input string, '0' can't be accepted."
             ).asLeft
           case c if c.isDigit => c.asDigit.asRight
           case _              =>
-            new IllegalArgumentException(
+            SudokuParserError(
               "Invalid character in input string"
             ).asLeft
         }

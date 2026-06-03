@@ -1,16 +1,18 @@
-import cats.syntax.all._
+package com.pwroblew.sudoku.solvers
+
+import com.pwroblew.sudoku.{Sudoku, SudokuSolver}
 
 class BacktrackingSudokuSolver extends SudokuSolver {
   override def solve(sudoku: Sudoku): List[Sudoku] = {
 
     def loop(pending: List[Sudoku], solutions: List[Sudoku]): List[Sudoku] = {
 
-      pending.headOption match {
-        case None         => solutions
-        case Some(sudoku) =>
+      pending match {
+        case Nil         => solutions
+        case sudoku :: rest =>
 
           sudoku.firstEmptyCellIndex match {
-            case None      => loop(pending.tail, List(sudoku) ++ solutions)
+            case None      => loop(rest, List(sudoku) ++ solutions)
             case Some(idx) =>
               val row = idx / 9
               val col = idx % 9
@@ -20,7 +22,7 @@ class BacktrackingSudokuSolver extends SudokuSolver {
               } yield newSudoku
 
               loop(
-                newSudokus.filter(_.isValid).toList ++ pending.tail,
+                newSudokus.filter(_.isValid).toList ++ rest,
                 solutions
               )
           }
@@ -35,9 +37,9 @@ class BacktrackingSudokuSolver extends SudokuSolver {
 
     def loop(pending: List[Sudoku]): Option[Sudoku] = {
 
-      pending.headOption match {
-        case None         => None
-        case Some(sudoku) =>
+      pending match {
+        case Nil         => None
+        case sudoku :: rest =>
 
           sudoku.firstEmptyCellIndex match {
             case None      => Some(sudoku)
@@ -50,7 +52,7 @@ class BacktrackingSudokuSolver extends SudokuSolver {
               } yield newSudoku
 
               loop(
-                newSudokus.filter(_.isValid).toList ++ pending.tail
+                newSudokus.filter(_.isValid).toList ++ rest
               )
           }
       }

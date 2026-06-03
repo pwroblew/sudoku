@@ -1,4 +1,4 @@
-import cats.syntax.all._
+package com.pwroblew.sudoku
 
 trait SudokuSolver {
   def solve(sudoku: Sudoku): List[Sudoku]
