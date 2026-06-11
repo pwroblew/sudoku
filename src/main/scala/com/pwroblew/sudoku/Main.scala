@@ -1,7 +1,7 @@
 package com.pwroblew.sudoku
 
 import cats.syntax.all._
-import cats.effect.{IO, IOApp, ExitCode}
+import cats.effect.{IO, IOApp}
 import solvers.BacktrackingSudokuSolver
 
 object Main extends IOApp.Simple {
