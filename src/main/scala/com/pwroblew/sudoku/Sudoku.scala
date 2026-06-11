@@ -6,7 +6,7 @@ enum SudokuStatus {
   case Incomplete, Solved, Invalid
 }
 
-case class SudokuParserError(message: String) extends Throwable(message)
+case class SudokuParserError(message: String)
 
 case class Sudoku private (data: Vector[Int]) {
 
@@ -92,7 +92,7 @@ case class Sudoku private (data: Vector[Int]) {
 
 object Sudoku {
 
-  def fromString(s: String): Either[Throwable, Sudoku] = {
+  def fromString(s: String): Either[SudokuParserError, Sudoku] = {
     val cleaned = s.replaceAll("\\s", "")
     if (cleaned.length != 81) then
       SudokuParserError("Input string must have exactly 81 characters").asLeft

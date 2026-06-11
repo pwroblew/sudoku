@@ -12,19 +12,8 @@ class BacktrackingSudokuSolver extends SudokuSolver {
         case sudoku :: rest =>
 
           sudoku.firstEmptyCellIndex match {
-            case None      => loop(rest, List(sudoku) ++ solutions)
-            case Some(idx) =>
-              val row = idx / 9
-              val col = idx % 9
-              val newSudokus: IndexedSeq[Sudoku] = for {
-                num <- 1 to 9
-                newSudoku = sudoku.set(row, col, num)
-              } yield newSudoku
-
-              loop(
-                newSudokus.filter(_.isValid).toList ++ rest,
-                solutions
-              )
+            case None      => loop(rest, sudoku :: solutions)
+            case Some(idx) =>loop(_newSudokus(sudoku, idx) ++ rest, solutions)
           }
       }
 
@@ -43,23 +32,23 @@ class BacktrackingSudokuSolver extends SudokuSolver {
 
           sudoku.firstEmptyCellIndex match {
             case None      => Some(sudoku)
-            case Some(idx) =>
-              val row = idx / 9
-              val col = idx % 9
-              val newSudokus: IndexedSeq[Sudoku] = for {
-                num <- 1 to 9
-                newSudoku = sudoku.set(row, col, num)
-              } yield newSudoku
-
-              loop(
-                newSudokus.filter(_.isValid).toList ++ rest
-              )
+            case Some(idx) => loop(_newSudokus(sudoku, idx) ++ rest)
           }
       }
 
     }
 
     loop(List(sudoku).filter(_.isValid))
+  }
+
+  private def _newSudokus(sudoku: Sudoku, idx: Int): List[Sudoku] = {
+    val row = idx / 9
+    val col = idx % 9
+    val newSudokus_ = for {
+      num <- 1 to 9
+      newSudoku = sudoku.set(row, col, num)
+    } yield newSudoku
+    newSudokus_.filter(_.isValid).toList
   }
 
 }

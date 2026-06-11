@@ -2,6 +2,7 @@ package com.pwroblew.sudoku
 
 import munit.*
 import com.pwroblew.sudoku.solvers.BacktrackingSudokuSolver
+import com.pwroblew.sudoku.SudokuParserError
 
 class SudokuSpec extends FunSuite {
 
@@ -16,10 +17,10 @@ class SudokuSpec extends FunSuite {
       |563284197
       |197635248""".stripMargin
 
-  val sudokuOrError: Either[Throwable, Sudoku] =
+  val sudokuOrError: Either[SudokuParserError, Sudoku] =
     Sudoku.fromString(validSudokuString)
 
-  val sudokuOrErrorF: FunFixture[Either[Throwable, Sudoku]] = FunFixture(
+  val sudokuOrErrorF: FunFixture[Either[SudokuParserError, Sudoku]] = FunFixture(
     _ => Sudoku.fromString(validSudokuString),
     _ => ()
   )
@@ -37,7 +38,7 @@ class SudokuSpec extends FunSuite {
       Sudoku
         .fromString(validSudokuString)
         .fold(
-          error => fail(s"Failed to parse Sudoku: ${error.getMessage}"),
+          error => fail(s"Failed to parse Sudoku: ${error.message}"),
           sudoku => sudoku
         ),
     _ => ()
@@ -79,7 +80,7 @@ class SudokuSpec extends FunSuite {
     assert(sudokuOrErr.isLeft)
     assertEquals(
       sudokuOrErr.left
-        .map(_.getMessage)
+        .map(_.message)
         .left
         .toOption
         .getOrElse(""),
@@ -99,7 +100,7 @@ class SudokuSpec extends FunSuite {
       |197635244""".stripMargin
 
   val invalidSudokuStringF
-      : FunFixture[(Either[Throwable, Sudoku], BacktrackingSudokuSolver)] =
+      : FunFixture[(Either[SudokuParserError, Sudoku], BacktrackingSudokuSolver)] =
     FunFixture(
       _ =>
         (Sudoku.fromString(invalidSudokuString), new BacktrackingSudokuSolver),
@@ -132,7 +133,7 @@ class SudokuSpec extends FunSuite {
       |19703.2.8""".stripMargin
 
   val incompleteValidSudokuStringF
-      : FunFixture[(Either[Throwable, Sudoku], BacktrackingSudokuSolver)] =
+      : FunFixture[(Either[SudokuParserError, Sudoku], BacktrackingSudokuSolver)] =
     FunFixture(
       _ =>
         (
