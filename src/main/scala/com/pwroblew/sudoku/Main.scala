@@ -2,13 +2,13 @@ package com.pwroblew.sudoku
 
 import cats.syntax.all._
 import cats.effect.{IO, IOApp}
-import solvers.BacktrackingSudokuSolver
+import solvers.BacktrackingSudokuSolverImproved
 
 object Main extends IOApp.Simple {
 
   override def run: IO[Unit] = {
 
-    val solver = new BacktrackingSudokuSolver
+    val solver = new BacktrackingSudokuSolverImproved
 
     for {
       input <- IO.blocking(

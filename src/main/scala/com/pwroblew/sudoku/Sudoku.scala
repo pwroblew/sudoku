@@ -30,6 +30,10 @@ case class Sudoku private (data: Vector[Int]) {
     case idx => Some(idx)
   }
 
+  def allEmptyCellIndices: List[Int] = data.zipWithIndex.collect {
+    case (0, idx) => idx
+  }.toList
+
   override def toString: String = {
     data
       .grouped(27)
@@ -86,6 +90,24 @@ case class Sudoku private (data: Vector[Int]) {
     }
 
     rowsValid && columnsValid && subgridsValid
+  }
+
+  def newBoards(idx: Int): List[Sudoku] = {
+    val row = idx / 9
+    val col = idx % 9
+    val newBoards_ = for {
+      num <- 1 to 9
+      newSudoku = this.set(row, col, num)
+    } yield newSudoku
+    newBoards_.filter(_.isValid).toList
+  }
+
+  def newBoards: List[(Int, List[Sudoku])] = {
+    allEmptyCellIndices.map(idx => (idx, newBoards(idx)))
+  }
+
+  def newBoardsSmallest: Option[(Int, List[Sudoku])] = {
+    newBoards.minByOption { case (_, boards) => boards.size }
   }
 
 }
