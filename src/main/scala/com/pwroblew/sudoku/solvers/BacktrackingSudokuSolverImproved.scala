@@ -12,7 +12,7 @@ class BacktrackingSudokuSolverImproved extends SudokuSolver {
         case sudoku :: rest =>
 
           sudoku.newBoardsSmallest match {
-            case None => loop(rest, sudoku :: solutions)
+            case None                => loop(rest, sudoku :: solutions)
             case Some((idx, boards)) => loop(boards ++ rest, solutions)
           }
       }
@@ -31,7 +31,7 @@ class BacktrackingSudokuSolverImproved extends SudokuSolver {
         case sudoku :: rest =>
 
           sudoku.newBoardsSmallest match {
-            case None => Some(sudoku)
+            case None                => Some(sudoku)
             case Some((idx, boards)) => loop(boards ++ rest)
           }
       }
