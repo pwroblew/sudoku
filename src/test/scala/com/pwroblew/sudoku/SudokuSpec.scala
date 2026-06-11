@@ -20,10 +20,11 @@ class SudokuSpec extends FunSuite {
   val sudokuOrError: Either[SudokuParserError, Sudoku] =
     Sudoku.fromString(validSudokuString)
 
-  val sudokuOrErrorF: FunFixture[Either[SudokuParserError, Sudoku]] = FunFixture(
-    _ => Sudoku.fromString(validSudokuString),
-    _ => ()
-  )
+  val sudokuOrErrorF: FunFixture[Either[SudokuParserError, Sudoku]] =
+    FunFixture(
+      _ => Sudoku.fromString(validSudokuString),
+      _ => ()
+    )
 
   sudokuOrErrorF.test("Parsing valid Sudoku string") { sudokuOrErr =>
     assert(sudokuOrErr.isRight)
@@ -77,13 +78,10 @@ class SudokuSpec extends FunSuite {
 
   sudokuInvalidStringF.test("Parsing Sudoku invalid string") { str =>
     val sudokuOrErr = Sudoku.fromString(str)
+
     assert(sudokuOrErr.isLeft)
     assertEquals(
-      sudokuOrErr.left
-        .map(_.message)
-        .left
-        .toOption
-        .getOrElse(""),
+      sudokuOrErr.fold(error => error.message, _ => ""),
       "Input string must have exactly 81 characters"
     )
   }
@@ -99,8 +97,9 @@ class SudokuSpec extends FunSuite {
       |563284197
       |197635244""".stripMargin
 
-  val invalidSudokuStringF
-      : FunFixture[(Either[SudokuParserError, Sudoku], BacktrackingSudokuSolver)] =
+  val invalidSudokuStringF: FunFixture[
+    (Either[SudokuParserError, Sudoku], BacktrackingSudokuSolver)
+  ] =
     FunFixture(
       _ =>
         (Sudoku.fromString(invalidSudokuString), new BacktrackingSudokuSolver),
@@ -132,8 +131,9 @@ class SudokuSpec extends FunSuite {
       |56328.197
       |19703.2.8""".stripMargin
 
-  val incompleteValidSudokuStringF
-      : FunFixture[(Either[SudokuParserError, Sudoku], BacktrackingSudokuSolver)] =
+  val incompleteValidSudokuStringF: FunFixture[
+    (Either[SudokuParserError, Sudoku], BacktrackingSudokuSolver)
+  ] =
     FunFixture(
       _ =>
         (

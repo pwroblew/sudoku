@@ -13,7 +13,7 @@ class BacktrackingSudokuSolver extends SudokuSolver {
 
           sudoku.firstEmptyCellIndex match {
             case None      => loop(rest, sudoku :: solutions)
-            case Some(idx) =>loop(_newSudokus(sudoku, idx) ++ rest, solutions)
+            case Some(idx) => loop(_newSudokus(sudoku, idx) ++ rest, solutions)
           }
       }
 
