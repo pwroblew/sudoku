@@ -1,6 +1,7 @@
 package com.pwroblew.sudoku.solvers
 
 import com.pwroblew.sudoku.{Sudoku, SudokuSolver}
+import scala.annotation.tailrec
 
 class BacktrackingSudokuSolverImproved extends SudokuSolver {
   override def solve(sudoku: Sudoku): List[Sudoku] = {
@@ -23,9 +24,9 @@ class BacktrackingSudokuSolverImproved extends SudokuSolver {
     loop(List(sudoku).filter(_.isValid), Nil)
   }
 
-  @tailrec
   override def solveOne(sudoku: Sudoku): Option[Sudoku] = {
 
+    @tailrec
     def loop(pending: List[Sudoku]): Option[Sudoku] = {
 
       pending match {
