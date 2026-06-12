@@ -1,8 +1,8 @@
 package com.pwroblew.sudoku
 
-import munit.*
-import com.pwroblew.sudoku.solvers.BacktrackingSudokuSolver
 import com.pwroblew.sudoku.SudokuParserError
+import com.pwroblew.sudoku.solvers.BacktrackingSudokuSolver
+import munit.*
 
 class SudokuSpec extends FunSuite {
 

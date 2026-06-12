@@ -1,12 +1,15 @@
 package com.pwroblew.sudoku
 
-import cats.syntax.all._
-import cats.effect.{IO, IOApp, ExitCode}
+import cats.effect.ExitCode
+import cats.effect.IO
+import cats.effect.IOApp
+import cats.syntax.all.*
+import com.pwroblew.sudoku.SudokuParserError
+import com.pwroblew.sudoku.SudokuSearchType
+import com.pwroblew.sudoku.SudokuSolverName
+
 import solvers.BacktrackingSudokuSolver
 import solvers.BacktrackingSudokuSolverImproved
-import com.pwroblew.sudoku.SudokuParserError
-import com.pwroblew.sudoku.SudokuSolverName
-import com.pwroblew.sudoku.SudokuSearchType
 
 object Main extends IOApp {
 
@@ -16,7 +19,7 @@ object Main extends IOApp {
       (solverName, searchType) <- IO.fromEither(
         (args.headOption, args.drop(1).headOption).tupled
           .toRight(
-            new Throwable(
+            new RuntimeException(
               """Usage: sudoku <solver> <search-type>
                                   |       available solvers: basic, improved
                                   |       available search types: all, one""".stripMargin
@@ -29,7 +32,7 @@ object Main extends IOApp {
         case Some(SudokuSolverName.Improved) =>
           IO(new BacktrackingSudokuSolverImproved)
         case None =>
-          IO.raiseError(new Throwable(s"Unknown solver: $solverName"))
+          IO.raiseError(new RuntimeException(s"Unknown solver: $solverName"))
       }
 
       solverMethod <- SudokuSearchType.fromString(searchType) match {
@@ -38,7 +41,7 @@ object Main extends IOApp {
           IO(solver.solveOne).map(_.andThen(_.toList))
         case None =>
           IO.raiseError(
-            new Throwable(s"Unknown search type: $searchType")
+            new RuntimeException(s"Unknown search type: $searchType")
           )
       }
 
@@ -50,7 +53,7 @@ object Main extends IOApp {
         Sudoku
           .fromString(input)
           .leftMap(error =>
-            new Throwable(s"Error parsing Sudoku: ${error.message}")
+            new RuntimeException(s"Error parsing Sudoku: ${error.message}")
           )
       )
 

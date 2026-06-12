@@ -1,6 +1,8 @@
 package com.pwroblew.sudoku.solvers
 
-import com.pwroblew.sudoku.{Sudoku, SudokuSolver}
+import com.pwroblew.sudoku.Sudoku
+import com.pwroblew.sudoku.SudokuSolver
+
 import scala.annotation.tailrec
 
 class BacktrackingSudokuSolverImproved extends SudokuSolver {

@@ -1,6 +1,6 @@
 package com.pwroblew.sudoku
 
-import cats.implicits._
+import cats.implicits.*
 
 enum SudokuStatus {
   case Incomplete, Solved, Invalid
