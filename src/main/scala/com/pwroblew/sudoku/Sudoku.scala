@@ -134,3 +134,27 @@ object Sudoku {
         .map(Sudoku(_))
   }
 }
+
+enum SudokuSolverName {
+  case Basic, Improved
+}
+
+object SudokuSolverName {
+  def fromString(s: String): Option[SudokuSolverName] = s.toLowerCase match {
+    case "basic"    => Some(SudokuSolverName.Basic)
+    case "improved" => Some(SudokuSolverName.Improved)
+    case _          => None
+  }
+}
+
+enum SudokuSearchType {
+  case All, One
+}
+
+object SudokuSearchType {
+  def fromString(s: String): Option[SudokuSearchType] = s.toLowerCase match {
+    case "all" => Some(SudokuSearchType.All)
+    case "one" => Some(SudokuSearchType.One)
+    case _     => None
+  }
+}

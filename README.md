@@ -12,10 +12,17 @@ Links:
 
 ## Usage
 
-To build, call: `scala-cli compile .`\
-To run, call: `scala-cli run . < a-file-with-sudoku.txt`
+The Sudoku board is read from standard input.
+There are two optional parameters: `solver` and `search-type`
+Available solvers: `basic` and `improved`.
+Available search types: `all` and `one`.
 
-Example: `scala-cli run . < src/main/resources/sudoku-simple.txt`
+To build, call: `scala-cli compile .`\
+To run with `scala-cli`, call: `scala-cli run . -- [solver] [search-type] < a-file-with-sudoku.txt`
+
+Example: `scala-cli run . -- improved all < src/main/resources/sudoku-simple.txt`
+
+When packaged with `scala-cli package . --power -o sudoku` one can call: `./sudoku improved all < src/main/resources/sudoku-simple.txt`
 
 ## Input format
 
@@ -35,10 +42,10 @@ Quite a nice data set with sudoku puzzles that can be used for testing the imple
 
 It is a classic backtracking algorithm. It starts with a one-element list containing the initial Sudoku. Then a Sudoku is taken from the list, a missing cell in the sudoku is found, and then new Sudoku boards are created by filling that cell with possible values. New Sudoku boards are added back to the list of boards still to explore. If none of new Sudoku boards are created out of the given sudoku, then the 'branch' is discarded and a next Sudoku board is taken from the list for processing. The procedure repeats until there are no boards left to explore. When a board has no empty cells and is valid, it is added to the list of solutions.
 
-### BacktrackingSudokuSolver
+### BacktrackingSudokuSolver - `basic` solver
 
 In this implementation, in each step the first board from the list is taken, and the first missing cell is chosen to generate new Sudoku boards. Then newly created boards are added at the beginning of the list and the procedure repeats.
 
-### BacktrackingSudokuSolverImproved
+### BacktrackingSudokuSolverImproved - `improved` solver
 
-This is still to be implemented. The idea is that instead of the first missing cell, the one with the lowest number of possible values is chosen.
+The idea is that instead of the first missing cell, the one with the lowest number of possible values is chosen.
