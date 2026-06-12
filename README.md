@@ -31,9 +31,11 @@ Example:
 scala-cli run . -- improved all < src/main/resources/sudoku-simple.txt
 ```
 
-When packaged with `scala-cli package . --power -o sudoku` one can call: ```
+When packaged with `scala-cli package . --power -o sudoku` one can call: 
+```
 ./sudoku improved all < src/main/resources/sudoku-simple.txt
 ```
+
 
 ## Input format
 
