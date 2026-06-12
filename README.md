@@ -17,12 +17,23 @@ There are two optional parameters: `solver` and `search-type`
 Available solvers: `basic` and `improved`.
 Available search types: `all` and `one`.
 
-To build, call: `scala-cli compile .`\
-To run with `scala-cli`, call: `scala-cli run . -- [solver] [search-type] < a-file-with-sudoku.txt`
+To build, call: 
+```
+scala-cli compile .
+```
+To run with `scala-cli`, call: 
+```
+scala-cli run . -- [solver] [search-type] < a-file-with-sudoku.txt
+```
 
-Example: `scala-cli run . -- improved all < src/main/resources/sudoku-simple.txt`
+Example: 
+```
+scala-cli run . -- improved all < src/main/resources/sudoku-simple.txt
+```
 
-When packaged with `scala-cli package . --power -o sudoku` one can call: `./sudoku improved all < src/main/resources/sudoku-simple.txt`
+When packaged with `scala-cli package . --power -o sudoku` one can call: ```
+./sudoku improved all < src/main/resources/sudoku-simple.txt
+```
 
 ## Input format
 
