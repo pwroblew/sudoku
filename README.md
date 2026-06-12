@@ -13,7 +13,7 @@ Links:
 ## Usage
 
 The Sudoku board is read from standard input.
-There are two optional parameters: `solver` and `search-type`
+There are two parameters: `solver` and `search-type`
 Available solvers: `basic` and `improved`.
 Available search types: `all` and `one`.
 

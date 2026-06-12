@@ -12,8 +12,6 @@ object Main extends IOApp {
 
   override def run(args: List[String]): IO[ExitCode] = {
 
-    val solver = new BacktrackingSudokuSolverImproved
-
     val program = for {
       (solverName, searchType) <- IO.fromEither(
         (args.headOption, args.drop(1).headOption).tupled
